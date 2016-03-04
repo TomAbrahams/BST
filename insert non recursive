@@ -1,0 +1,68 @@
+//insert (non-recursive)
+void BST::insert(int theData)
+{
+	//stack<Node*> myStack;
+	Node* current = root;
+	bool flag = true;
+	while (flag)
+	{
+		if (root == NULL)
+		{
+			root = new Node;
+			root->data = theData;
+			//Initializing to null.
+			root->llink = NULL;
+			root->rlink = NULL;
+			//Increment Count
+			++count;
+		}
+		//Cannot have duplicate data in a tree. If duplicate data is found, the loop ends.
+		else if (current->data == theData)
+		{
+			cerr << "The item to insert is already in the list. Duplicates are not allowed" 
+				<< endl;
+			flag = false;
+		}
+		//If the the data inserted is less than the node's data. Then search left.
+		else if ((theData < current->data) && (current->llink != NULL))
+			current = current->llink;
+		//If the the data inserted is greater than the node's data. Then search right.
+		else if ((theData > current->data) && (current->rlink != NULL))
+			current = current->rlink;
+		//If the currently pointed node has no llink or rlink
+		//Create another new link dependent on the data
+		else if ((current->llink == NULL) && (current->rlink != NULL))
+		{
+			//If the data is less than the node. 
+			//Left link address will hold an address for a new node.
+			if (theData < current->data)
+			{
+				current->llink = new Node;
+				current->llink->data = theData;
+				flag = false;
+				current = current->llink;
+				//Initialize links to Null
+				current->llink = NULL;
+				current->rlink = NULL;
+				//Increment Count
+				++count;
+			}
+			//If the data is less than the node. 
+			//Left link address will hold an address for a new node.
+			else if (theData > current->data)
+			{
+				current->rlink = new Node;
+				current->rlink->data = theData;
+				flag = false;
+				current = current->rlink;
+				//Initialize links to Null
+				current->llink = NULL;
+				current->rlink = NULL;
+				//Increment Count
+				++count;
+			}
+		}
+	}
+
+
+}
